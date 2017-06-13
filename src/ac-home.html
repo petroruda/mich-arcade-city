@@ -1,0 +1,27 @@
+<!--
+  This is the Home Page of the app.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="ac-home">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+      <h1 class="heading">Home</h1>
+  </template>
+
+  <script>
+    class AcHome extends Polymer.Element {
+      static get is() { return 'ac-home'; }
+    }
+
+    window.customElements.define(AcHome.is, AcHome);
+  </script>
+</dom-module>
