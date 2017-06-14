@@ -63,8 +63,10 @@
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
+
     <!-- Load application shell -->
     <link rel="import" href="src/ac-app.html">
+    <link rel="import" href="src/ac-login.html">
 
     <!-- Global styles for body, document, etc. -->
     <style>
@@ -75,13 +77,19 @@
         min-height: 100vh;
         background-color: #eeeeee;
       }
+      .hidden{
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <ac-app></ac-app>
+
+    <ac-app id="app">AC</ac-app>
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
-    
+
+    <script type="text/javascript">
+    </script>
   </body>
 </html>

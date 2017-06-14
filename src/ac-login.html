@@ -1,7 +1,11 @@
 <!--
+    Login Page.
+    This page contains an iFrame pointing to a firebaseUi Auth html file that provides a smooth auth flow. :-)
 -->
 
+
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-login">
@@ -9,16 +13,45 @@
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
+      iframe{
+        width: 100%;
+        height: 480px;
+        border: none;
+        overflow:hidden;
+      }
     </style>
-      <h1 class="heading">Login</h1>
+    <firebase-auth
+     id="auth"
+     user="{{user}}"
+     provider="google"
+     on-error="handleError">
+    </firebase-auth>
+    <!-- Show if user is not logedin -->
+      <iframe hidden$="{{user}}" src="/src/firebase-ui.html"></iframe>
+
+    <!-- Show if user is loged in -->
+      <div class="profile" hidden$="{{!user}}">
+          <h4>Welcome {{user.displayName}}<h4>
+          <p>Profile Info Goes Here or <a href="/">Go to Profile Link</a><p>
+      </div>
+      </div>
   </template>
 
   <script>
     class AcLogin extends Polymer.Element {
       static get is() { return 'ac-login'; }
+      static get properties() {
+           return {
+               user: String
+           }
+        }
+
+    _loginWithGoogle() {
+        console.log(this.user);
+      }
+
     }
 
     window.customElements.define(AcLogin.is, AcLogin);

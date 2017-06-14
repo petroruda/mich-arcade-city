@@ -16,6 +16,16 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+<!-- firebase -->
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth-script.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-database-script.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-storage-script.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-messaging-script.html">
+
+
 <link rel="import" href="ac-icons.html">
 
 <link rel="lazy-import" href="ac-home.html">
@@ -66,7 +76,28 @@
         color: black;
         font-weight: bold;
       }
+      .drawer-footer{
+        margin-top: 20px;
+
+      }
     </style>
+
+    <!-- firebase config -->
+    <firebase-app
+      database-url="https://ac-app-2a741.firebaseio.com"
+      storage-bucket="867747872481"
+      api-key="AIzaSyCycwF0M4GzD7OPvV5vcbv3G1t_DUQzIgA"
+      messaging-sender-id="ac-app-2a741.appspot.com"
+      auth-domain="ac-app-2a741.firebaseapp.com">
+    </firebase-app>
+
+    <firebase-auth
+     id="auth"
+     user="{{user}}"
+     provider="google"
+     on-error="handleError">
+    </firebase-auth>
+
 
     <!-- The app's main router' -->
     <app-location route="{{route}}"></app-location>
@@ -82,6 +113,9 @@
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="home">Home</a>
+          <div class="drawer-footer">
+            <a on-tap="_signOut">Sign Out</a>
+          </div>
         </iron-selector>
       </app-drawer>
 
@@ -92,7 +126,7 @@
           <app-toolbar>
             <paper-icon-button icon="ac-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>Arcade City</div>
-            <a name="login" href="login">Login</a> <!--Will disapear if user is loged in -->
+            <a hidden$="{{user}}" name="login" href="login">Login</a> <!--Will disapear if user is loged in -->
           </app-toolbar>
         </app-header>
         
@@ -165,6 +199,11 @@
             null,
             this._showPage404.bind(this),
             true);
+      }
+
+      _signOut() {
+        this.$.auth.signOut();
+        
       }
 
       _showPage404() {
