@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const admin = requir('firebase-admin');
+const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
 const ref = admin.database().ref();
