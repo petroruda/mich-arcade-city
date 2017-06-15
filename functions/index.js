@@ -15,7 +15,7 @@ const ref = admin.database().ref();
     const photo = event.data.photoURL;
     const name = event.data.displayName || "https://ac-app-2a741.firebaseapp.com/images/user.jpg";
 
-    const newUserRef = ref.child('users/${uid}');
+    const newUserRef = ref.child('users/' + uid);
     return newUserRef.set({
         photoURL: photo,
         email: email,
