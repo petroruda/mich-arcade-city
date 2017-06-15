@@ -16,6 +16,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 
 
 <!-- firebase -->
@@ -27,9 +28,17 @@
 
 
 <link rel="import" href="ac-icons.html">
+<link rel="import" href="ac-avator.html">
 
+<!-- Pages -->
 <link rel="lazy-import" href="ac-home.html">
+<link rel="lazy-import" href="ac-chat.html">
+<link rel="lazy-import" href="ac-profile.html">
+<link rel="lazy-import" href="ac-notifications.html">
 <link rel="lazy-import" href="ac-login.html">
+<link rel="lazy-import" href="ac-about.html">
+<link rel="lazy-import" href="ac-terms.html">
+<link rel="lazy-import" href="ac-privacy.html">
 <link rel="lazy-import" href="ac-404.html">
 
 <dom-module id="ac-app">
@@ -77,6 +86,9 @@
         font-weight: bold;
       }
       .drawer-footer{
+        border-top: 1px solid #aaa;
+        padding-left: 15px;
+        font-size: 10pt;
         margin-top: 20px;
 
       }
@@ -110,10 +122,16 @@
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open>
-        <app-toolbar>Menu</app-toolbar>
+      <!-- Avator area -->
+        <ac-avator user="{{user}}"></ac-avator>
+
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="home">Home</a>
+          <a name="profile" href="profile">Profile</a>
           <div class="drawer-footer">
+            <a name="about" href="about">About</a>
+            <a name="terms" href="terms">Terms of Service</a>
+            <a name="privacy" href="privacy">Privacy</a>
             <a on-tap="_signOut">Sign Out</a>
           </div>
         </iron-selector>
@@ -126,16 +144,23 @@
           <app-toolbar>
             <paper-icon-button icon="ac-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>Arcade City</div>
+            <a name="profile" href="profile"><iron-icon icon="ac-icons:verified-user"></iron-icon></a>
             <a hidden$="{{user}}" name="login" href="login">Login</a> <!--Will disapear if user is loged in -->
           </app-toolbar>
         </app-header>
-        
+
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="404"
             role="main">
           <ac-home name="home"></ac-home>
+          <ac-chat name="chat"></ac-chat>
+          <ac-profile name="profile"></ac-profile>
+          <ac-notifications name="notifications"></ac-notifications>
+          <ac-about name="about"></ac-about>
+          <ac-terms name="terms"></ac-terms>
+          <ac-privacy name="privacy"></ac-privacy>
           <ac-login name="login"></ac-login>
           <ac-404 name="404"></ac-404>
         </iron-pages>
@@ -203,7 +228,7 @@
 
       _signOut() {
         this.$.auth.signOut();
-        
+
       }
 
       _showPage404() {

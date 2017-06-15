@@ -1,0 +1,74 @@
+<!--
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="ac-avator">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+        padding: 18px;
+      }
+      .avator{
+        margin-top: 10px;
+      }
+      .avator img{
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 1px solid #444;
+      }
+      .user-info h4{
+        margin: 5px;
+      }
+      .notification-area{
+          margin-top: 15px;
+          width: 100%;
+          max-width: 220px;
+          display: flex;
+      }
+      .notification-area a{
+          justify-content: space-around;
+          color: #333;
+          text-decoration: none;
+          padding: 15px;
+      }
+      .new{
+        font-weight: bold;
+      }
+    </style>
+
+    <div hidden$="{{!user}}" class="avator">
+        <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo">
+        <div class="user-info">
+            <h4>{{user.displayName}}</h4>
+            <span>{{user.email}}</span>
+            <span>{{user.phoneNumber}}</span>
+            <div class="notification-area">
+                <a name="chat" href="chat"><span class="new">3 </span>Chat</a>
+                <a name="notifications" href="notifications"><span class="new">1</span> Notifications</a>
+                <!-- <a name="profile" href="profile">Profile</a> -->
+            </div>
+        </div>
+    </div>
+
+  </template>
+
+  <script>
+    class AcAvator extends Polymer.Element {
+      static get is() { return 'ac-avator'; }
+      static get properties() {
+        return {
+          user: {
+              type: Object,
+              notify: true
+          }
+        };
+      }
+    }
+
+    window.customElements.define(AcAvator.is, AcAvator);
+  </script>
+</dom-module>

@@ -1,0 +1,34 @@
+<!--
+    chat Functions will be done here.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="ac-chat">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px 20px;
+      }
+    </style>
+
+    <h1 class="heading">Chat</h1>
+  </template>
+
+  <script>
+    class AcChat extends Polymer.Element {
+      static get is() { return 'ac-chat'; }
+      static get properties() {
+        return {
+        };
+      }
+    }
+
+    window.customElements.define(AcChat.is, AcChat);
+  </script>
+</dom-module>
+

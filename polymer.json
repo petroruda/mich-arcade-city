@@ -3,6 +3,12 @@
   "shell": "src/ac-app.html",
   "fragments": [
     "src/ac-home.html",
+    "src/ac-about.html",
+    "src/ac-chat.html",
+    "src/ac-notifications.html",
+    "src/ac-privacy.html",
+    "src/ac-profile.html",
+    "src/ac-terms.html",
     "src/ac-icons.html",
     "src/ac-login.html",
     "src/firebase-ui.html",

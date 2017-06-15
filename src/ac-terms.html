@@ -1,0 +1,33 @@
+<!--
+    Profile Functions will be done here.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="ac-terms">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px 20px;
+      }
+    </style>
+
+    <h1 class="heading">Terms</h1>
+  </template>
+
+  <script>
+    class AcTerms extends Polymer.Element {
+      static get is() { return 'ac-terms'; }
+      static get properties() {
+        return {
+        };
+      }
+    }
+
+    window.customElements.define(AcTerms.is, AcTerms);
+  </script>
+</dom-module>
+
