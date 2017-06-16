@@ -45,9 +45,19 @@
   <template>
     <style>
       :host {
-        --app-primary-color: #fff;
-        --app-secondary-color: #000;
-        --app-header-text-color: #000;
+        --app-primary-color:           rgb(29, 32, 41);
+        --app-secondary-color:         #03A9F4;
+        --app-header-text-color:       #dedefe;
+        --dark-primary-color:          #455A64;
+        --default-primary-color:       #607D8B;
+        --light-primary-color:         #CFD8DC;
+        --text-primary-color:          #FFFFFF;
+        --accent-color:                #03A9F4;
+        --primary-background-color:    #CFD8DC;
+        --primary-text-color:          #CFccff;
+        --secondary-text-color:        #757575;
+        --disabled-text-color:         #BDBDBD;
+        --divider-color:               #BDBDBD;
 
         display: block;
       }
@@ -55,20 +65,28 @@
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
       }
+      paper-icon-button{
+        color: var(--app-secondary-color);
+      }
 
       app-header {
-        color: var(--app-header-text-color);;
+        color: var(--app-header-text-color);
         background-color: var(--app-primary-color);
       }
       app-header a{
         text-decoration: none;
-        color: var(--app-header-text-color);;
+        color: var(--app-header-text-color);
       }
 
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-
+      app-drawer {
+        --app-drawer-content-container: {
+          color: var(--text-primary-color);
+          background-color: var(--app-primary-color);
+        }
+      }
       .drawer-list {
         margin: 0 20px;
       }
@@ -82,7 +100,7 @@
       }
 
       .drawer-list a.iron-selected {
-        color: black;
+        color: var(--text-primary-color);;
         font-weight: bold;
       }
       .drawer-footer{
@@ -140,10 +158,10 @@
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
-        <app-header slot="header" condenses reveals effects="waterfall">
+        <app-header slot="header" condenses fixed effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="ac-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>Arcade City</div>
+            <div main-title class="header-text">Arcade City</div>
             <!--<a hidden$="{{!user}}" name="profile" href="profile"><iron-icon icon="ac-icons:person-outline"></iron-icon></a>-->
             <a hidden$="{{user}}" name="login" href="login">Login</a> <!--Will disapear if user is loged in -->
           </app-toolbar>
