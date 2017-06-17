@@ -2,6 +2,7 @@
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 
 <dom-module id="ac-avator">
   <template>
@@ -14,7 +15,7 @@
       .avator{
         margin-top: 10px;
       }
-      .avator img{
+      .avator iron-image{
         width: 64px;
         height: 64px;
         border-radius: 50%;
@@ -31,17 +32,19 @@
       }
       .notification-area a{
           justify-content: space-around;
-          color: var(--text-primary-color);;
+          color: var(--accent-color);
           text-decoration: none;
           padding: 15px;
       }
       .new{
+        color: var(--primary-text-color);
         font-weight: bold;
       }
     </style>
 
     <div hidden$="{{!user}}" class="avator">
-        <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo">
+        <iron-image style="width:64px; height:64px;" sizing="cover" placeholder="images/user.jpg" preload fade src="{{user.photoURL}}"></iron-image>
+       <!-- <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo"> -->
         <div class="user-info">
             <h4>{{user.displayName}}</h4>
             <span>{{user.email}}</span>

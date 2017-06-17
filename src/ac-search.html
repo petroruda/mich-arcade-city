@@ -1,0 +1,39 @@
+<!--
+    Profile Functions will be done here.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="ac-icons.html">
+
+<dom-module id="ac-search">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        max-width: 320px;
+        width: 80%;
+        padding: 15px;
+      }
+    </style>
+
+        <paper-input label="username">
+            <iron-icon icon="ac-icons:search" prefix></iron-icon>
+        </paper-input>
+  </template>
+
+  <script>
+    class AcSearch extends Polymer.Element {
+      static get is() { return 'ac-search'; }
+      static get properties() {
+        return {
+        };
+      }
+    }
+
+    window.customElements.define(AcSearch.is, AcSearch);
+  </script>
+</dom-module>
+

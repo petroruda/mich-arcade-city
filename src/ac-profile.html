@@ -23,8 +23,8 @@
           justify-content: center;
           width: 100%;
       }
-      .user-image img{
-          border-radius: 10px;
+      .user-image iron-image{
+          border-radius: 50%;
           width: 100px;
           height: 100px;
       }
@@ -52,7 +52,8 @@
         <div class="user-info card">
             <h1>Car Details</h1>
             <div class="user-image">
-                <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo">
+                <iron-image style="width:100px; height:100px;" sizing="cover" placeholder="images/user.jpg" preload fade src="{{user.photoURL}}"></iron-image>
+                <!-- <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo"> -->
             </div>
              <paper-input value="{{user.displayName}}" label="Display Name"></paper-input>
              <paper-input value="{{user.phoneNumber}}" label="Phone Number"></paper-input>
