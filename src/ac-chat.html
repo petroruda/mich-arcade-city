@@ -4,6 +4,11 @@
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="ac-search.html">
+<link rel="import" href="ac-icons.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-chat">
@@ -11,12 +16,54 @@
     <style include="shared-styles">
       :host {
         display: block;
-
-        padding: 10px 20px;
+      }
+      .chat-list{
+        list-style: none;
+      }
+      .chat-item{
+        display: flex;
+        height: 100px;
+        border-bottom: 1px solid #999;
+        margin: 10px;
+        /*justify-content: space-between;*/
+      }
+      .chat-item:nth-of-type(2){
+        border-left: 4px solid #03A9F4 !important;
+      }
+      .chat-item iron-image{
+        min-width:64px;
+      }
+      .chat-info{
+        color: var(--primary-text-color);
+        padding: 10px;
+        line-height: 8px;
       }
     </style>
 
-    <h1 class="heading">Chat</h1>
+    <iron-ajax
+        auto
+        url="https://randomuser.me/api?results=10&inc=name,email,picture,gender"
+        handle-as="json"
+        last-response="{{data}}"
+        on-response="handleResponse"></iron-ajax>
+
+
+    <main>
+       <div class="search">
+          <ac-search></ac-search>
+       </div>
+           <template is="dom-repeat" items="[[data.results]]">
+             <div class="chat-item">
+                <iron-image sizing="cover" placeholder="images/user.jpg" preload fade src="{{item.picture.medium}}"></iron-image>
+              <div class="chat-info">
+                <h4 class="chat-name">{{item.name.first}}</h4>
+                <p class="chat-name">Sample last Text ...</p>
+                <p class="chat-name">12:30pm.</p>
+              </div>
+              <!--<iron-icon icon="ac-icons:search"></iron-icon>-->
+             </div>
+           </template>
+    </main>
   </template>
 
   <script>
@@ -24,7 +71,11 @@
       static get is() { return 'ac-chat'; }
       static get properties() {
         return {
+          data: Object
         };
+      }
+      handleResponse(){
+        console.log(this.data);
       }
     }
 
