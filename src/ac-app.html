@@ -33,6 +33,7 @@
 <!-- Pages -->
 <link rel="lazy-import" href="ac-home.html">
 <link rel="lazy-import" href="ac-chat.html">
+<link rel="lazy-import" href="chat-view.html">
 <link rel="lazy-import" href="ac-profile.html">
 <link rel="lazy-import" href="ac-notifications.html">
 <link rel="lazy-import" href="ac-login.html">
@@ -173,7 +174,8 @@
             fallback-selection="404"
             role="main">
           <ac-home name="home"></ac-home>
-          <ac-chat name="chat"></ac-chat>
+          <ac-chat selectedUser="{{selectedUser}}" name="chat"></ac-chat>
+          <ac-chat-view name="chat-view" user={{selectedUser}}></ac-chat-view>
           <ac-profile name="profile"></ac-profile>
           <ac-notifications name="notifications"></ac-notifications>
           <ac-about name="about"></ac-about>
@@ -197,6 +199,12 @@
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged',
+          },
+          selectedUser: {
+              type: Object,
+              value: function(){
+                  return {};
+              }
           },
           rootPattern: String,
           routeData: Object,
@@ -251,6 +259,12 @@
 
       _showPage404() {
         this.page = '404';
+      }
+      attached(){
+        var chat = document.querySelector('ac-chat');
+        chat.addEventListener('open-chat', function(){
+          console.log("selected User!" + this.selectedUser);
+        })
       }
     }
 

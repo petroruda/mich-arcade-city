@@ -1,0 +1,61 @@
+<!--
+    Profile Functions will be done here.
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="chat-list">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px 20px;
+      }
+    </style>
+
+    <div class="content">
+        <template is="dom-repeat" items="[[users.results]]">
+          <div user={{item}} class="chat-item">
+             <iron-image sizing="cover" placeholder="images/user.jpg" preload fade src="{{item.picture.medium}}"></iron-image>
+           <div class="chat-info">
+             <h4 class="chat-name">{{item.name.first}}</h4>
+             <p class="chat-name">Sample last Text ...</p>
+             <p class="chat-name">12:30pm.</p>
+           </div>
+           <paper-icon-button on-click="{{_selectUser}}" icon="menu"></paper-icon-button>
+           <iron-icon icon="ac-icons:search"></iron-icon>
+          </div>
+        </template>
+    </div>
+  </template>
+
+  <script>
+    class ChatList extends Polymer.Element {
+      static get is() { return 'chat-list'; }
+      static get properties() {
+        return {
+            users: {
+                type: Array,
+                notify: true
+            },
+            selectedUser: {
+                type: Object,
+                value: function(){
+                    return {};
+                }
+            }
+        };
+      }
+      _selectUser(e){
+        var user = e.currentTarget.user;
+        this.selectedUser = uer;
+        console.log(this.selectedUser);
+      }
+    }
+
+    window.customElements.define(ChatList.is, ChatList);
+  </script>
+</dom-module>

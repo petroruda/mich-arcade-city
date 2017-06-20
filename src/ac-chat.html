@@ -47,21 +47,19 @@
         last-response="{{data}}"
         on-response="handleResponse"></iron-ajax>
 
-
     <main>
        <div class="search">
           <ac-search></ac-search>
        </div>
            <template is="dom-repeat" items="[[data.results]]">
-             <div class="chat-item">
+              <a on-tap="_selectUser" href="chat-view/{{item.name.first}}" class="chat-item">
                 <iron-image sizing="cover" placeholder="images/user.jpg" preload fade src="{{item.picture.medium}}"></iron-image>
-              <div class="chat-info">
-                <h4 class="chat-name">{{item.name.first}}</h4>
-                <p class="chat-name">Sample last Text ...</p>
-                <p class="chat-name">12:30pm.</p>
-              </div>
-              <!--<iron-icon icon="ac-icons:search"></iron-icon>-->
-             </div>
+                <div class="chat-info">
+                  <h4 class="chat-name">{{item.name.first}}</h4>
+                  <p class="chat-name">Sample last Text ...</p>
+                  <p class="chat-name">12:30pm.</p>
+                </div>
+              </a>
            </template>
     </main>
   </template>
@@ -71,11 +69,23 @@
       static get is() { return 'ac-chat'; }
       static get properties() {
         return {
-          data: Object
+          data: Object,
+          selectedUser: {
+              type: Object,
+              notify:true,
+              value: function(){
+                  return {};
+              }
+          }
         };
       }
       handleResponse(){
         console.log(this.data);
+      }
+      _selectUser(e){
+        var user = e.currentTarget.user;
+        this.selectedUser = user;
+        console.log(this.selectedUser);
       }
     }
 
