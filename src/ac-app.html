@@ -33,7 +33,7 @@
 <!-- Pages -->
 <link rel="lazy-import" href="ac-home.html">
 <link rel="lazy-import" href="ac-chat.html">
-<link rel="lazy-import" href="chat-view.html">
+<link rel="lazy-import" href="ac-chat-view.html">
 <link rel="lazy-import" href="ac-profile.html">
 <link rel="lazy-import" href="ac-notifications.html">
 <link rel="lazy-import" href="ac-login.html">
@@ -174,8 +174,8 @@
             fallback-selection="404"
             role="main">
           <ac-home name="home"></ac-home>
-          <ac-chat selectedUser="{{selectedUser}}" name="chat"></ac-chat>
-          <ac-chat-view name="chat-view" user={{selectedUser}}></ac-chat-view>
+          <ac-chat name="chat"></ac-chat>
+          <ac-chat-view route="{{subroute}}" name="chat-view"></ac-chat-view>
           <ac-profile name="profile"></ac-profile>
           <ac-notifications name="notifications"></ac-notifications>
           <ac-about name="about"></ac-about>

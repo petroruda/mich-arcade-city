@@ -15,12 +15,17 @@
         padding: 10px 20px;
       }
     </style>
+    <app-route
+        route="{{route}}"
+        pattern="/:user_name"
+        data="{{routeData}}"></app-route>
 
     <div class="content">
     <a href="chat">
       <paper-icon-button user={{item}}  icon="ac-icons:arrow-back"></paper-icon-button>
     </a>
-        {{user.name.first}}
+        {{routeData.user_name}}
+        <button on-click="log">log</button>
     </div>
   </template>
 
@@ -32,8 +37,12 @@
             user: {
                 type: Object,
                 notify: true
-            } 
+            },
+            routeData: Object
         };
+      }
+      log(){
+        console.log(this.routeData)
       }
     }
 
