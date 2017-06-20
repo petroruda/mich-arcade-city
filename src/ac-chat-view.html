@@ -4,6 +4,10 @@
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-chat-view">
@@ -14,6 +18,23 @@
 
         padding: 10px 20px;
       }
+      .content{
+        width: 100%;
+        height: 100%;
+      }
+      .input-area{
+        display: flex;
+        width: 100%;
+        padding: 10px;
+        height: 60px;
+        align-items: flex-end;
+        bottom: 5px;
+        position: fixed;
+      }
+      .input-area paper-textarea{
+        width: 200px;
+        margin-right: 20px;
+      }
     </style>
     <app-route
         route="{{route}}"
@@ -22,10 +43,16 @@
 
     <div class="content">
     <a href="chat">
-      <paper-icon-button user={{item}}  icon="ac-icons:arrow-back"></paper-icon-button>
+      <paper-icon-button icon="ac-icons:arrow-back"></paper-icon-button>
     </a>
-        {{routeData.user_name}}
-        <button on-click="log">log</button>
+        Chat with {{routeData.user_name}}
+        <button on-click="log" hidden>log</button>
+        <div class="input-area">
+          <paper-textarea id="text" placeholder="Type your message"></paper-textarea>
+          <paper-icon-button icon="ac-icons:add-a-photo"></paper-icon-button>
+          <paper-fab on-tap="_sendMsg" icon="ac-icons:send"></paper-fab>
+        </div>
+
     </div>
   </template>
 
@@ -38,8 +65,19 @@
                 type: Object,
                 notify: true
             },
+            messages : {
+              type: Array,
+              value: function(){
+                return [];
+              }
+            },
             routeData: Object
         };
+      }
+      _sendMsg(){
+        var text = this.$.text.value;
+        this.push('messages', text);
+        console.log(this.messages);
       }
       log(){
         console.log(this.routeData)
