@@ -33,7 +33,18 @@
       }
       .input-area paper-textarea{
         width: 200px;
-        margin-right: 20px;
+        margin-right: 5px;
+      }
+      .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      paper-fab{
+        margin-left: 15px;
       }
     </style>
     <app-route
@@ -49,7 +60,9 @@
         <button on-click="log" hidden>log</button>
         <div class="input-area">
           <paper-textarea id="text" placeholder="Type your message"></paper-textarea>
-          <paper-icon-button icon="ac-icons:add-a-photo"></paper-icon-button>
+          <input type="file" name="file" id="file" class="inputfile" />
+          <label for="file"><iron-icon icon="ac-icons:add-a-photo"></iron-icon></label>
+          <!--<paper-icon-button icon="ac-icons:add-a-photo"></paper-icon-button>-->
           <paper-fab on-tap="_sendMsg" icon="ac-icons:send"></paper-fab>
         </div>
 
