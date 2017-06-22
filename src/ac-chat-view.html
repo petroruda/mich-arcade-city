@@ -15,8 +15,7 @@
     <style include="shared-styles">
       :host {
         display: block;
-
-        padding: 10px 20px;
+        width: 100%;
       }
       .content{
         width: 100%;
@@ -28,7 +27,7 @@
         padding: 10px;
         height: 60px;
         align-items: flex-end;
-        bottom: 5px;
+        bottom: 0;
         position: fixed;
       }
       .input-area paper-textarea{
@@ -46,6 +45,33 @@
       paper-fab{
         margin-left: 15px;
       }
+      .chat-container{
+        height: 400px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      .chat-wrap{
+          display: flex;
+          flex-direction: column;
+          overflow-y: auto;
+          margin-bottom: 10px;
+          height: calc(100% - 10px);
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .bubble{
+        min-width: 50px;
+        margin: 10px;
+        padding: 10px;
+        position: relative;
+        background: #03A9F4;
+        border-radius: 10px 10px 0px 10px;
+      }
+      .chat-time{
+        margin-left: 15px;
+        font-size: 10pt;
+        color: #CFD8DC;
+      }
     </style>
     <app-route
         route="{{route}}"
@@ -53,20 +79,28 @@
         data="{{routeData}}"></app-route>
 
     <div class="content">
-    <a href="chat">
-      <paper-icon-button icon="ac-icons:arrow-back"></paper-icon-button>
-    </a>
-        Chat with {{routeData.user_name}}
-        <button on-click="log" hidden>log</button>
-        <div class="input-area">
-          <paper-textarea id="text" placeholder="Type your message"></paper-textarea>
-          <input type="file" name="file" id="file" class="inputfile" />
-          <label for="file"><iron-icon icon="ac-icons:add-a-photo"></iron-icon></label>
-          <!--<paper-icon-button icon="ac-icons:add-a-photo"></paper-icon-button>-->
-          <paper-fab on-tap="_sendMsg" icon="ac-icons:send"></paper-fab>
-        </div>
+      <a href="chat">
+        <paper-icon-button icon="ac-icons:arrow-back"></paper-icon-button>Chat with {{routeData.user_name}}
+      </a>
 
-    </div>
+      <div class="chat-container">
+        <div id="messageList" class="chat-wrap">
+            <template is="dom-repeat" items="[[messages]]">
+              <div class="bubble" on-tap="_selectUser" user={{item}} href="chat-view/{{item.name.first}}" name="chat-view">
+                  <div class="chat-text">{{item.text}} <span class="chat-time">{{item.time}}</span></div>
+              </div>
+            </template>
+        </div>
+      </div>
+      
+      <div class="input-area">
+        <paper-textarea id="text" placeholder="Type your message"></paper-textarea>
+        <input type="file" name="file" id="file" class="inputfile" />
+        <label for="file"><iron-icon icon="ac-icons:add-a-photo"></iron-icon></label>
+        <!--<paper-icon-button icon="ac-icons:add-a-photo"></paper-icon-button>-->
+        <paper-fab on-tap="_sendMsg" icon="ac-icons:send"></paper-fab>
+      </div>
+    </div>    
   </template>
 
   <script>
@@ -89,11 +123,27 @@
       }
       _sendMsg(){
         var text = this.$.text.value;
-        this.push('messages', text);
+        if(text === ""){
+          console.log('No text!')
+        }else if(text === undefined){
+          console.log('No text!')
+        }else{
+          this.push('messages', {
+            text:text,
+            time: "just now"
+            });
+            this.$.messageList.scrollTop = this.$.messageList.scrollHeight;
+        }
+        this.$.text.value = "";
         console.log(this.messages);
       }
+
       log(){
         console.log(this.routeData)
+      }
+
+      attached(){
+        this.$.messageList.scrollTop = this.$.messageList.scrollHeight;
       }
     }
 
