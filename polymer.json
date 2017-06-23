@@ -5,6 +5,7 @@
     "src/ac-home.html",
     "src/ac-about.html",
     "src/ac-chat.html",
+    "src/ac-chat-view.html",
     "src/ac-notifications.html",
     "src/ac-privacy.html",
     "src/ac-profile.html",
