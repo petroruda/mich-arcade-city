@@ -14,21 +14,22 @@
     <style include="shared-styles">
       :host {
         display: block;
-        width: 100%;
       }
-      .content{
-        width: 100%;
+      .content{  
+        position: fixed;
+        top: 56;
+        left: 0;
+        right: 0;
         height: 100%;
-        margin-bottom: 68px;
+        overflow: hidden;
       }
       .input-area{
         display: flex;
         width: 100%;
-        padding: 10px;
+        margin-bottom: 30px;
         height: 60px;
         align-items: flex-end;
-        bottom: 0;
-        position: fixed;
+        justify-content: center;
       }
       .input-area paper-textarea{
         width: 200px;
@@ -46,7 +47,7 @@
         margin-left: 15px;
       }
       .chat-container{
-        height: 400px;
+        height: calc(100% - 180px);;
         padding-top: 0;
         padding-bottom: 0;
       }
@@ -94,7 +95,7 @@
       <div class="chat-container">
         <div id="messageList" class="chat-wrap">
             <template is="dom-repeat" items="[[messages]]">
-              <div class="bubble" on-tap="_selectUser" user={{item}} href="chat-view/{{item.name.first}}" name="chat-view">
+              <div class="bubble self" on-tap="_selectUser" user={{item}} href="chat-view/{{item.name.first}}" name="chat-view">
                   <div class="chat-text">{{item.text}} <span class="chat-time">{{item.time}}</span></div>
               </div>
             </template>
