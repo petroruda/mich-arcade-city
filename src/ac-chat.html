@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
 
 
 <link rel="import" href="../bower_components/app-route/app-location.html">
@@ -50,23 +51,34 @@
       }
     </style>
 
-    <iron-ajax
+<!--    <iron-ajax
         auto
         url="https://randomuser.me/api?results=10&inc=name,email,picture,gender"
         handle-as="json"
         last-response="{{data}}"
-        on-response="handleResponse"></iron-ajax>
+        on-response="handleResponse"></iron-ajax>-->
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      provider="google"
+      on-error="handleError">
+    </firebase-auth>
+    <firebase-query
+      id="query"
+      path="/users"
+      data="{{data}}">
+    </firebase-query>
 
     <main>
        <div class="search">
           <ac-search></ac-search>
        </div>
 
-           <template is="dom-repeat" items="[[data.results]]">
-              <a on-tap="_selectUser" user={{item}} href="chat-view/{{item.name.first}}" name="chat-view" class="chat-item">
-                <iron-image sizing="cover" placeholder="images/user.jpg" preload fade src="{{item.picture.medium}}"></iron-image>
+           <template is="dom-repeat" items="[[data]]">
+              <a on-tap="_selectUser" user={{item}} href="chat-view/{{item.$key}}" name="chat-view" class="chat-item">
+                <iron-image sizing="cover" placeholder="images/user.jpg" preload fade src="{{item.photoURL}}"></iron-image>
                 <div class="chat-info">
-                  <h4 class="chat-name">{{item.name.first}}</h4>
+                  <h4 class="chat-name">{{item.displayName}}</h4>
                   <p class="chat-name">Sample last Text ...</p>
                   <p class="chat-name">12:30pm.</p>
                 </div>

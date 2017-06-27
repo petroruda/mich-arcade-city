@@ -7,6 +7,9 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-chat-view">
@@ -69,16 +72,18 @@
         align-self: flex-end !important;
         background: #03A9F4 !important;
         border-radius: 10px 10px 0px 10px!important;
+        margin-left:70px;
       }
       .other {
         color: #03A9F4;
         align-self: flex-start !important;
         background: #dedefe !important;
         border-radius:  10px 10px 10px 0px !important;
+        margin-right:70px;
       }
       .chat-time{
         margin-left: 15px;
-        font-size: 10pt;
+        font-size: 8pt;
         color:inherit;
       }
     </style>
@@ -87,15 +92,32 @@
         pattern="/:user_name"
         data="{{routeData}}"></app-route>
 
+        <firebase-auth
+          id="auth"
+          user="{{user}}"
+          provider="google"
+          on-error="handleError">
+        </firebase-auth>
+        <firebase-query
+          id="selfQuery"
+          path="users/{{user.uid}}/chats/{{routeData.user_name}}"
+          data="{{messages}}">
+        </firebase-query>
+        <firebase-document
+          id="friendQuery"
+          path="/users/{{routeData.user_name}}"
+          data="{{friend}}">
+        </firebase-document>
+
     <div class="content">
       <a href="chat">
-        <paper-icon-button icon="ac-icons:arrow-back"></paper-icon-button>Chat with {{routeData.user_name}}
+        <paper-icon-button icon="ac-icons:arrow-back"></paper-icon-button>Chat with {{friend.displayName}}
       </a>
 
       <div class="chat-container">
         <div id="messageList" class="chat-wrap">
             <template is="dom-repeat" items="[[messages]]">
-              <div class="bubble self" on-tap="_selectUser" user={{item}} href="chat-view/{{item.name.first}}" name="chat-view">
+              <div class$="bubble {{_self(item)}}" on-tap="_selectUser" user={{item}} name="chat-view">
                   <div class="chat-text">{{item.text}} <span class="chat-time">{{item.time}}</span></div>
               </div>
             </template>
@@ -123,10 +145,19 @@
             },
             messages : {
               type: Array,
-              value: function(){
-                return [];
-              },
               observer: '_msgAdded'
+            },
+            user: {
+              type: Object,
+              value: function(){
+                return {};
+              }
+            },
+            friend: {
+              type: Object,
+              value: function(){
+                return {};
+              }
             },
             routeData: Object
         };
@@ -134,15 +165,20 @@
       _sendMsg(){
         var messageList = this.$.messageList;
         var text = this.$.text.value;
+        var message = {
+            sender: this.user.uid, 
+            text: text,
+            time: new Date().toString()
+          }
+
         if(text === ""){
           console.log('No text!')
         }else if(text === undefined){
           console.log('No text!')
         }else{
-          this.push('messages', {
-            text:text,
-            time: "just now"
-            });
+            console.log(firebase, 'users/' + this.user.uid + '/chats/' + this.routeData.user_name, message)
+            firebase.database().ref('users/' + this.user.uid + '/chats/' + this.routeData.user_name).push(message);
+            firebase.database().ref('users/' + this.routeData.user_name + '/chats/' + this.user.uid).push(message);
         }
         this.$.text.value = "";
         setTimeout(function(){
@@ -151,13 +187,37 @@
        
         console.log(this.messages);
       }
+      _self(message){
+        var self = "";
+        if(message.sender === this.user.uid){
+           self = "self";
+        }else{
+           self = "other"
+        }
+        return self;
+      }
 
       log(){
         console.log(this.routeData)
       }
 
+      _msgAdded(){
+        var messageList = this.$.messageList;
+        console.log('from observor');
+        
+        setTimeout(function(){
+          messageList.scrollTop = messageList.scrollHeight;
+        }, 100);
+
+      }
+
       attached(){
-        //this.$.messageList.scrollTop = this.$.messageList.height;
+        var messageList = this.$.messageList;
+        var query = this.$.selfQuery;
+        query.ref.on('value', function(snap){
+          console.log(snap.val());
+          messageList.scrollTop = messageList.scrollHeight;
+        })
       }
     }
 
