@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-profile">
@@ -31,7 +32,7 @@
       .buttons{
           width:100%;
           bottom: 0px;
-          display: flex;
+          display: none;
           position: fixed;
           height: 64px;
           justify-content: flex-end;
@@ -44,6 +45,10 @@
      provider="google"
      on-error="handleError">
     </firebase-auth>
+    <firebase-document
+        path="/users/{{user.uid}}"
+        data="{{userData}}">
+    </firebase-document>
 
  <div hidden$="{{user}}" class="not-loged-in">
      Please <a href="/login">Sign In</a> to View Your Profile
@@ -52,21 +57,21 @@
         <div class="user-info card">
             <h1>Car Details</h1>
             <div class="user-image">
-                <iron-image style="width:100px; height:100px;" sizing="cover" placeholder="images/user.jpg" preload fade src="{{user.photoURL}}"></iron-image>
+                <iron-image style="width:100px; height:100px;" sizing="cover" placeholder="images/user.jpg" preload fade src="{{userData.photoURL}}"></iron-image>
                 <!-- <img src="{{user.photoURL}}" placeholder-img="images/user.jpg" alt="{{user.displayName}}'s Photo"> -->
             </div>
-             <paper-input value="{{user.displayName}}" label="Display Name"></paper-input>
-             <paper-input value="{{user.phoneNumber}}" label="Phone Number"></paper-input>
-             <paper-input value="{{user.location}}" label="Location"></paper-input>
-             <paper-input value="{{user.email}}" label="Email"></paper-input>
+             <paper-input value="{{userData.displayName}}" label="Display Name"></paper-input>
+             <paper-input value="{{userData.phoneNumber}}" label="Phone Number"></paper-input>
+             <paper-input value="{{userData.location}}" label="Location"></paper-input>
+             <paper-input value="{{userData.email}}" label="Email"></paper-input>
              <paper-textarea label="About Me"></paper-textarea>
         </div>
-        <div class="user-info card">
+        <div class="user-info card" hidden>
              <h1>Car Details</h1>
-            <paper-input value="{{user.car.info}}" label="Short Dispcription of car"></paper-input>
+            <paper-input value="{{userData.car.info}}" label="Short Dispcription of car"></paper-input>
         </div>
         </div>
-    <div class="buttons">
+    <div class="buttons" hidden>
         <span></span>
         <button class="button danger">Cancel</button>
         <button class="button accept">Save</button>
