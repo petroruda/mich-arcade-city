@@ -19,7 +19,8 @@
     "paper-input": "PolymerElements/paper-input#^2.0.1",
     "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
     "paper-button": "PolymerElements/paper-button#^2.0.0",
-    "paper-fab": "PolymerElements/paper-fab#^2.0.0"
+    "paper-fab": "PolymerElements/paper-fab#^2.0.0",
+    "moment-js": "saeidzebardast/moment-js#^0.7.2"
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.3"

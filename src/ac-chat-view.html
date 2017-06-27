@@ -10,6 +10,7 @@
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/moment-js/moment-js.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="ac-chat-view">
@@ -118,7 +119,9 @@
         <div id="messageList" class="chat-wrap">
             <template is="dom-repeat" items="[[messages]]">
               <div class$="bubble {{_self(item)}}" on-tap="_selectUser" user={{item}} name="chat-view">
-                  <div class="chat-text">{{item.text}} <span class="chat-time">{{item.time}}</span></div>
+                  <div class="chat-text">{{item.text}} <span class="chat-time">
+                    <moment-js date="{{item.time}}"   date-format="YYYY-MM-DD HH:mm"  format="LLLL" from-now></moment-js></span>
+                  </div>
               </div>
             </template>
         </div>
@@ -163,12 +166,13 @@
         };
       }
       _sendMsg(){
+        var date = new Date().toString();
         var messageList = this.$.messageList;
         var text = this.$.text.value;
         var message = {
             sender: this.user.uid, 
             text: text,
-            time: new Date().toString()
+            time: moment(date).format('YYYY-MM-DD HH:mm:ss')
           }
 
         if(text === ""){
