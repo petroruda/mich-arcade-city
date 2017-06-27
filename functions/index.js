@@ -11,14 +11,17 @@ const ref = admin.database().ref();
 
  exports.createUserAccount = functions.auth.user().onCreate(event => {
     const uid = event.data.uid;
-    const email = event.data.email;
-    const photo = event.data.photoURL;
-    const name = event.data.displayName || "https://ac-app-2a741.firebaseapp.com/images/user.jpg";
+    const email = event.data.email || "";
+    const phone = event.data.phoneNumber || "";
+    const photo = event.data.photoURL || "https://ac-app-2a741.firebaseapp.com/images/user.jpg";
+    const name = event.data.displayName || "";
 
     const newUserRef = ref.child('users/' + uid);
     return newUserRef.set({
         photoURL: photo,
         email: email,
-        name: name,
+        phoneNumber: phone,
+        displayName: name,
+        active: false
     })
 })
